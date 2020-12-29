@@ -1,0 +1,10 @@
+{
+  "rectangle": {
+    "width": 1500,
+    "height": 800,
+    "layout": { "width": 4, "height": 4, "flat": false, "spacing": 1.02 },
+    "origin": { "x": -85, "y": -40 },
+    "map": "rectangle",
+    "mapProps": [10, 10]
+  }
+}
