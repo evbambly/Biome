@@ -3,16 +3,16 @@ import { HexGrid, Layout, Hexagon, Text, Path } from "react-hexgrid";
 import "./App.css";
 import configs from "./configurations";
 import {
-  getHexIndex,
-  getHexData,
-  modifyGrid,
+  GetHexIndex,
+  InitializeRectangularGrid,
+  ModifyGrid,
   GROUND_TYPES,
-  getCoordinates,
-  getFlow,
-  findConflictingLayout,
+  GetEmptyHexFromRectangleGrid,
+  FindConflictingLayout,
 } from "./dataGrid";
+import Biome from "./biome";
 
-const Map = ({ qLength, rLength, mapLayout }) => {
+const BiomeMap = ({ qLength, rLength, mapLayout }) => {
   const config = configs["rectangle"];
   const [hexagons, setHexagons] = useState([]);
 
@@ -20,13 +20,13 @@ const Map = ({ qLength, rLength, mapLayout }) => {
   const size = { x: layout.width, y: layout.height };
 
   useEffect(() => {
-    const plainGrid = getHexData(qLength, rLength);
+    const plainGrid = InitializeRectangularGrid(qLength, rLength);
 
     let customGrid = plainGrid;
 
-    findConflictingLayout(mapLayout);
+    FindConflictingLayout(mapLayout);
     mapLayout?.forEach((layer) => {
-      customGrid = modifyGrid(customGrid, layer.hexes, layer.type);
+      customGrid = ModifyGrid(customGrid, layer.hexes, layer.type);
     });
 
     setHexagons(customGrid);
@@ -39,8 +39,8 @@ const Map = ({ qLength, rLength, mapLayout }) => {
       for (let i = 0; i < hexElements.length; i++) {
         const element = hexElements.item(i);
         element.onclick = (e) => {
-          const { q, r, s } = getCoordinates(i, qLength);
-          const chosenHexIndex = getHexIndex(hexagons, { q, r, s });
+          const { q, r, s } = GetEmptyHexFromRectangleGrid(i, qLength);
+          const chosenHexIndex = GetHexIndex(hexagons, { q, r, s });
           if (chosenHexIndex !== -1) {
             let nextHexagons = JSON.parse(JSON.stringify(hexagons));
             console.log(nextHexagons[chosenHexIndex]);
@@ -57,12 +57,12 @@ const Map = ({ qLength, rLength, mapLayout }) => {
   }, [hexagons]);
 
   const getHexText = (hex) => {
-  //  const qText = hex.q < 0 ? "M" : "";
-   // const rText = hex.r < 0 ? "R" : "";
-  //  const sText = hex.s < 0 ? "=" : "";
     return hex.height ?? "";
- //  return `${hex.q}${hex.r}${hex.s}`;
-   // return qText + rText + sText;
+    //  const qText = hex.q < 0 ? "M" : "";
+    // const rText = hex.r < 0 ? "R" : "";
+    //  const sText = hex.s < 0 ? "=" : "";
+    // return qText + rText + sText;
+    //  return `${hex.q}${hex.r}${hex.s}`;
   };
   const setClassnames = (hex) => {
     let className = "editable";
@@ -94,10 +94,10 @@ const Map = ({ qLength, rLength, mapLayout }) => {
   };
 
   const hexDisplay = hexagons?.map((hex) => setClassnames(hex));
-  let flows = []
+  let flows = [];
   hexagons.forEach((hex) => {
     if (hex.flowedTo) {
-      const {q, r, s} = hex.flowedTo
+      const { q, r, s } = hex.flowedTo;
       if (!isNaN(q + r + s)) {
         flows.push({ from: hex, to: hex.flowedTo });
       }
@@ -107,7 +107,9 @@ const Map = ({ qLength, rLength, mapLayout }) => {
   return (
     <div>
       <button onClick={alertMarked}>Get Marked</button>
-      <button onClick={() => setHexagons(getFlow(hexagons))}>Get flow</button>
+      <button onClick={() => setHexagons(Biome.GetFlow(hexagons))}>
+        Get flow
+      </button>
       <hr />
       <HexGrid width={config.width} height={config.height}>
         <Layout
@@ -137,10 +139,10 @@ const Map = ({ qLength, rLength, mapLayout }) => {
           {flows?.map((flow) => (
             <Path start={flow?.from} end={flow?.to} />
           ))}
-         </Layout>
+        </Layout>
       </HexGrid>
     </div>
   );
 };
 
-export default Map;
+export default BiomeMap;

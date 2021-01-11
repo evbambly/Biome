@@ -1,6 +1,6 @@
 import { GROUND_TYPES } from "./dataGrid";
 
-export const mapOption1 = [
+export const Biome1 = [
   {
     type: { groundType: GROUND_TYPES.RIVER },
     hexes: [

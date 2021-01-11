@@ -1,14 +1,14 @@
 
 import './App.css';
-import Map from './Map'
-import {mapOption1} from './groundData'
+import BiomeMap from './BiomeMap'
+import {Biome1} from './MapOptions'
 
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-     <Map qLength={25} rLength={15} mapLayout={mapOption1} />
+     <BiomeMap qLength={25} rLength={15} mapLayout={Biome1} />
       </header>
     </div>
   );
