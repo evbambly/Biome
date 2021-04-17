@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { HexGrid, Layout, Hexagon, Text, Path } from "react-hexgrid";
-import "./App.css";
-import configs from "./configurations";
+import "../App.css";
+import configs from "../configurations";
 import {
   GetHexIndex,
   InitializeRectangularGrid,
   ModifyGrid,
-  GROUND_TYPES,
   GetEmptyHexFromRectangleGrid,
   FindConflictingLayout,
-} from "./dataGrid";
+} from "../utils/HexUtils";
 import Biome from "./biome";
+import {GROUND_TYPES} from "../AirStation/constants/terrain"
 
 const BiomeMap = ({ qLength, rLength, mapLayout }) => {
   const config = configs["rectangle"];
@@ -30,7 +30,7 @@ const BiomeMap = ({ qLength, rLength, mapLayout }) => {
     });
 
     setHexagons(customGrid);
-  }, []);
+  }, [mapLayout, qLength, rLength]);
 
   useEffect(() => {
     const hexElements = document.getElementsByClassName("editable");
@@ -80,17 +80,14 @@ const BiomeMap = ({ qLength, rLength, mapLayout }) => {
     return hex;
   };
   const alertMarked = () => {
-    const marked = hexagons
+    let markedString = "[";
+    hexagons
       .filter((hex) => hex.isMarked)
-      .map(({ q, r, s }) => {
-        return {
-          q,
-          r,
-          s,
-        };
+      .forEach(({ q, r, s }) => {
+        markedString += `{q:${q},r:${r},s:${s}},`;
       });
-
-    alert(JSON.stringify(marked));
+    markedString += "]";
+    alert(markedString);
   };
 
   const hexDisplay = hexagons?.map((hex) => setClassnames(hex));

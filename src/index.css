@@ -19,8 +19,8 @@ body {
 svg {
 }
 svg g {
-  fill: greenyellow;
-  fill-opacity: 0.6;
+  fill: rgb(151, 207, 65);
+  fill-opacity: 0.8;
 }
 
 svg g.marked g{
@@ -31,6 +31,23 @@ svg g.marked g{
 
 svg g.river g{
   fill: aqua;
+  stroke-width: 0.2;
+  transition: fill-opacity 0.2s;
+}
+
+svg g.forest g{
+  fill: #2d5a08;
+  stroke-width: 0.2;
+  transition: fill-opacity 0.2s;
+}
+svg g.city g{
+  fill: silver;
+  stroke-width: 0.2;
+  transition: fill-opacity 0.2s;
+}
+
+svg g.resource  g{
+  fill: rgb(251, 255, 0);
   stroke-width: 0.2;
   transition: fill-opacity 0.2s;
 }
@@ -48,12 +65,23 @@ svg g polygon {
   transition: fill-opacity 0.2s;
 }
 
+svg g.main-route g {
+background-color: whitesmoke;
+  opacity: .5;
+}
+
+svg g.side-route g {
+  background-color: whitesmoke;
+    opacity: .8;
+  }
+
 svg g text {
   font-size: 0.2em;
   fill: #000;
   fill-opacity: 0.9;
   transition: fill-opacity 0.2s;
 }
+
 svg path {
   fill: none;
   stroke: hsl(60, 20%, 70%);

@@ -1,4 +1,4 @@
-import { GROUND_TYPES } from "./dataGrid";
+import { GROUND_TYPES } from "./AirStation/constants/terrain";
 
 export const Biome1 = [
   {
@@ -247,3 +247,5 @@ export const Biome1 = [
     ],
   },
 ];
+
+

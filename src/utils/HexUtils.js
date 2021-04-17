@@ -1,11 +1,3 @@
-export const GROUND_TYPES = {
-  RIVER: "river",
-  MOUNTAIN: "mountain",
-  FOREST: "forest",
-  DESERT: "desert",
-  CITY: "city",
-};
-
 export const GetEmptyHexFromRectangleGrid = (index, qLength) => {
   const r = Math.floor(index / qLength);
   const q = (index % qLength) - Math.floor(r / 2);
@@ -36,8 +28,7 @@ export const ModifyGrid = (hexGrid, modifyHexes, modificationProperty) => {
 
   if (
     typeof modificationProperty === "object" &&
-    modificationProperty !== null &&
-    Object.keys(modificationProperty).length === 1
+    modificationProperty !== null
   ) {
     modifiedHexes = modifiedHexes.map((hex) =>
       Object.assign(hex, modificationProperty)
@@ -69,7 +60,7 @@ export const CleanHexes = (grid, keepProperties) => {
   return grid.map((hex) => ReduceHex(hex, keepProperties));
 };
 
-export const ReduceHex = (hex, keepProperties) => {
+export const ReduceHex = (hex, keepProperties = []) => {
   const { q, r, s } = hex;
   let reducedHex = { q, r, s };
   if (Array.isArray(keepProperties)) {

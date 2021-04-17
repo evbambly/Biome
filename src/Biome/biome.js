@@ -1,11 +1,12 @@
 import { HexUtils } from "react-hexgrid";
 import {
-  GROUND_TYPES,
   GetFullHex,
   GetHexIndex,
   ReduceHex,
   CleanHexes,
-} from "./dataGrid";
+} from "../utils/HexUtils";
+import {GROUND_TYPES} from "../AirStation/constants/terrain"
+
 
 const Biome = {
   GetFlow: (grid) => {
